@@ -20,6 +20,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Get app's version
+      run: |
+        TAG=$(git describe --tags --abbrev=0)
+        echo "APP_VERSION=$TAG" >> $GITHUB_ENV
+
     - name: Build the app
       run: npm install && npm run build
       working-directory: ./frontend  
@@ -43,7 +48,7 @@ jobs:
       with:
         dotnet-version: '9.0.x'
         
-    - name: Publish the app
+    - name: Publish backend
       run: dotnet publish -c Release --property:PublishDir=publish # Publish the app to the API project publish folder
       working-directory: ./backend # Specify where to find the solution file in repository
           
@@ -51,12 +56,13 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: backend-app
-        path: backend/publish/
+        path: backend/ParkNDeploy.Api/publish/
 
 
   infrastructure-CD:
     runs-on: ubuntu-latest
     environment: production
+    needs: [frontend-CI, backend-CI]
 
     outputs:
       appServiceName: ${{ steps.bicep_deploy.outputs.appServiceName }}
@@ -99,7 +105,7 @@ jobs:
       uses: actions/checkout@v4
     
     - name: Download Artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: backend-app
         path: backend-app
@@ -131,7 +137,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Download Artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: frontend-dist
         path: frontend-dist
@@ -145,7 +151,7 @@ jobs:
 
     - name: Get Static Web App deployment token
       run: |      
-        SWA_DEPLOYMENT_TOKEN=$(az staticwebapp secrets list -n ${{ needs.deploy_infrastructure.outputs.staticWebAppName }} -o tsv --query properties.apiKey)
+        SWA_DEPLOYMENT_TOKEN=$(az staticwebapp secrets list -n ${{ needs.infrastructure-CD.outputs.staticWebAppName }} -o tsv --query properties.apiKey)
         echo SWA_DEPLOYMENT_TOKEN=$SWA_DEPLOYMENT_TOKEN >> $GITHUB_ENV
   
     - name: Deploy frontend to Static Web App
