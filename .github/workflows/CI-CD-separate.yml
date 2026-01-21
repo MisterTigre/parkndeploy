@@ -25,8 +25,8 @@ jobs:
     - name: Get app's version
       run: |
         TAG=$(git describe --tags --abbrev=0)
+        cd frontend
         npm version $TAG
-      working-directory: ./frontend
 
 
     - name: Build the app
@@ -39,8 +39,8 @@ jobs:
         git config --global user.email "41898282+github_actions[bot]@users.noreply.github.com"
         git add .
         git commit -m 'automatic update of version file'
-        git tag --delete $TAG
         git push origin ${GITHUB_REF}
+      working-directory: ./frontend
       
     - name: Upload Frontend Artifact
       uses: actions/upload-artifact@v4
