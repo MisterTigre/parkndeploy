@@ -29,10 +29,9 @@ jobs:
         git config --global user.email 41898282+github_actions[bot]@users.noreply.github.com
         cd frontend
         npm version $VERSION
-        git checkout ${GITHUB_REF##*/}
         git add .
         git commit -m 'automatic update of version file'
-        git push origin
+        git push origin/main
 
 
     - name: Build the app
