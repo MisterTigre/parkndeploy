@@ -28,6 +28,8 @@ jobs:
     - name: Build the app
       run: npm install && npm run build
       working-directory: ./frontend  
+      env:
+        APP_VERSION: ${{ env.APP_VERSION }}
       
     - name: Upload Frontend Artifact
       uses: actions/upload-artifact@v4
