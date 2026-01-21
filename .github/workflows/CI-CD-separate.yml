@@ -24,8 +24,8 @@ jobs:
 
     - name: Get app's version
       run: |
-        VERSION=$(git describe --tags --abbrev=0)
-        npm version $VERSION
+        TAG=$(git describe --tags --abbrev=0)
+        npm version $TAG
       working-directory: ./frontend
 
 
@@ -40,7 +40,6 @@ jobs:
         git add .
         git commit -m 'automatic update of version file'
         git push origin ${GITHUB_REF}
-      working-directory: ./frontend
       
     - name: Upload Frontend Artifact
       uses: actions/upload-artifact@v4
