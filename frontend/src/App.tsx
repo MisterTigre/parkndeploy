@@ -7,6 +7,7 @@ import ParkingList from "@/components/ParkingList/ParkingList";
 import { LoadingSpinner } from "@/components/ui/loadingspinner";
 import ParkingListFilters from "@/components/ParkingList/ParkingListFilters";
 import { useParkingSearchStore } from "@/stores/parkingSearchStore";
+const version = import.meta.env.APP_VERSION
 
 function App() {
   const { parkingName } = useParkingSearchStore();
@@ -19,18 +20,21 @@ function App() {
   console.log(parkingName)
 
   return (
-    <div className="flex flex-col gap-5 items-center">
-      <h1 className="text-2xl font-bold text-center">
-        Where can I Park in Angers ? 👀
-      </h1>
-      <ParkingListFilters
-        onChange={(parkingName: string) => {
-          console.log(parkingName);
-        }}
-      />
-      {isPending && <LoadingSpinner className="mr-2 h-4 w-4 animate-spin" />}
-      {isError && <span>Something went wrong with the backend ...</span>}
-      {data && <ParkingList parkings={data.parkings} />}
+    <div>
+      <div className="flex flex-col gap-5 items-center">
+        <h1 className="text-2xl font-bold text-center">
+          Where can I Park in Angers ? 👀
+        </h1>
+        <ParkingListFilters
+          onChange={(parkingName: string) => {
+            console.log(parkingName);
+          }}
+        />
+        {isPending && <LoadingSpinner className="mr-2 h-4 w-4 animate-spin" />}
+        {isError && <span>Something went wrong with the backend ...</span>}
+        {data && <ParkingList parkings={data.parkings} />}
+      </div>
+      version : {version}
     </div>
   );
 }
