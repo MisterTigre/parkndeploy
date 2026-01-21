@@ -7,7 +7,7 @@ import ParkingList from "@/components/ParkingList/ParkingList";
 import { LoadingSpinner } from "@/components/ui/loadingspinner";
 import ParkingListFilters from "@/components/ParkingList/ParkingListFilters";
 import { useParkingSearchStore } from "@/stores/parkingSearchStore";
-const version = import.meta.env.APP_VERSION || "error"
+const version = __APP_VERSION__ || "error"
 
 function App() {
   const { parkingName } = useParkingSearchStore();

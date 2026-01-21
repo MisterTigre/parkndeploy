@@ -20,7 +20,7 @@ export default defineConfig({
     },
   },  
   define: {
-    'import.meta.env.APP_VERSION': JSON.stringify(process.env.APP_VERSION),
+        '__APP_VERSION__': JSON.stringify(process.env.npm_package_version),
   },
   plugins: [react()],
 })
