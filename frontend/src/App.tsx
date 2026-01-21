@@ -34,7 +34,7 @@ function App() {
         {isError && <span>Something went wrong with the backend ...</span>}
         {data && <ParkingList parkings={data.parkings} />}
       </div>
-      version : {import.meta.env.VITE_APP_VERSION}
+      version : {APP_VERSION}
     </div>
   );
 }
