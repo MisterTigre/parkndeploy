@@ -21,9 +21,6 @@ function App() {
 
   return (
     <div>
-      <script>
-        const version = __APP_VERSION__ || "error"
-      </script>
       <div className="flex flex-col gap-5 items-center">
         <h1 className="text-2xl font-bold text-center">
           Where can I Park in Angers ? 👀
@@ -37,7 +34,7 @@ function App() {
         {isError && <span>Something went wrong with the backend ...</span>}
         {data && <ParkingList parkings={data.parkings} />}
       </div>
-      version : {version}
+      version : {import.meta.env.VITE_APP_VERSION}
     </div>
   );
 }
