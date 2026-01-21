@@ -31,7 +31,7 @@ jobs:
         npm version $VERSION
         git add .
         git commit -m 'automatic update of version file'
-        git push origin/main
+        git push origin/HEAD
 
 
     - name: Build the app
