@@ -8,6 +8,7 @@ on:
 permissions:
   id-token: write
   contents: write
+  repository-projects: write
 
 env: 
   AZURE_RG_NAME: rg-${{ vars.PROJECT_NAME }}-${{ vars.AZURE_RESOURCE_IDENTIFIER }}
@@ -31,7 +32,7 @@ jobs:
         npm version $VERSION
         git add .
         git commit -m 'automatic update of version file'
-        git push origin/HEAD HEAD
+        git push origin HEAD
 
 
     - name: Build the app
