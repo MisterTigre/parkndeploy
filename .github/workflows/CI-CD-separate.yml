@@ -25,8 +25,11 @@ jobs:
     - name: Get app's version
       run: |
         VERSION=$(git describe --tags --abbrev=0)
+        git config --global user.name github_actions[bot]
+        git config --global user.email 41898282+github_actions[bot]@users.noreply.github.com
         cd frontend
         npm version $VERSION
+        git checkout main
         git add .
         git commit -m 'automatic update of version file'
         git push origin
