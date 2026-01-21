@@ -25,10 +25,12 @@ jobs:
     - name: Get app's version
       run: |
         VERSION=$(git describe --tags --abbrev=0)
+        cd frontend
         npm version $VERSION
         git add .
         git commit -m 'automatic update of version file'
         git push origin
+
 
     - name: Build the app
       run: npm install && npm run build
